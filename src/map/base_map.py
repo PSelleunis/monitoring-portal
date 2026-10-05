@@ -1,6 +1,7 @@
 import folium
 from typing import Optional
 from folium import Element
+from folium.plugins import MousePosition
 
 
 class BaseMap:
@@ -75,6 +76,17 @@ class BaseMap:
             overlay=True,
             control=True,
             show=False,
+        ).add_to(self.m)
+
+        MousePosition(
+            position="topright",
+            separator=" | ",
+            empty_string="NaN",
+            lng_first=False,
+            num_digits=20,
+            prefix="Coordinates:",
+            lat_formatter="function(num) {return L.Util.formatNum(num, 5) + '&deg; N';};",
+            lng_formatter="function(num) {return L.Util.formatNum(num, 5) + '&deg; E';};",
         ).add_to(self.m)
 
     def customize_map(self):
