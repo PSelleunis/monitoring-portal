@@ -1,9 +1,8 @@
 # Imports
 import streamlit as st
-import folium
 from streamlit_folium import st_folium
 
-from src.app.reusable.folium_basemap import get_folium_basemap
+from src.map.base_map import BaseMap
 from src.config.config_manager import ConfigManager
 from src.sensors.borehole import SensorBorehole
 from src.plots.boreholes import (
@@ -31,8 +30,8 @@ if "last_tooltip" not in st.session_state:
     st.session_state.last_tooltip = None
 
 # Map visualization
-m = get_folium_basemap()
-folium.LayerControl().add_to(m)
+m = BaseMap().get_map()
+
 for config in config_manager.get_stations("boreholes"):
     config.get_marker().add_to(m)
 
